@@ -2,11 +2,11 @@ import allure
 from selene import have, by
 
 
-@allure.title("Successful fill form")
+# @allure.title("Successful fill form")
 def test_successful(setup_browser):
     browser = setup_browser
-    first_name = "Alex"
-    last_name = "Egorov"
+    first_name = "Vitalii"
+    last_name = "Eremeev"
 
     with allure.step("Open registrations form"):
         browser.open("https://demoqa.com/automation-practice-form")

@@ -48,8 +48,9 @@ def setup_browser(request):
     browser = Browser(Config(driver))
 
     yield browser
-    browser.quit()
     attach.add_html(browser)
+    driver.set_script_timeout(5)
     attach.add_screenshot(browser)
     attach.add_logs(browser)
     attach.add_video(browser)
+    browser.quit()
