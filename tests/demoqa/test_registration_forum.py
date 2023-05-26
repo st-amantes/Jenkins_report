@@ -5,12 +5,13 @@ from pages.registration_pages import RegistrationPage
 
 @allure.title("Тест регистрации формы")
 def test_successful(setup_browser):
+    registration_page = RegistrationPage()
     browser = setup_browser
 
-    @allure.step("Fill form")
-    def fill_form():
-        registration_page = RegistrationPage()
+    with allure.step("Открытие браузера"):
         browser.open("https://demoqa.com/automation-practice-form")
+
+    with allure.step("Заполнение регистрационных даных"):
         registration_page.fill_first_name("Albert")
         registration_page.fill_last_name("Ivanov")
         registration_page.fill_email("ALLIIVAN@mail.ru")
@@ -27,7 +28,7 @@ def test_successful(setup_browser):
         registration_page.fill_state('Rajasthan')
         registration_page.fill_city('Jaipur')
 
-        # THEN
+    with allure.step("Проверка регистрационных данных"):
         registration_page.assert_register_user_info(
             'Albert Ivanov',
             'ALLIIVAN@mail.ru',

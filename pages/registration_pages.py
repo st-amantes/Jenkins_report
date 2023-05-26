@@ -1,23 +1,21 @@
 import os
 
 import allure
-from selene import browser, have, command
+from selene import  have, command
 
 
 class RegistrationPage:
+    def __init__(self, browser):
+        self.browser = browser
 
     def remove_block(self):
-        browser.driver.execute_script(
+        self.browser.driver.execute_script(
             'document.querySelector("#fixedban").remove()'
         )
 
-    def __init__(self):
+    def __init1__(self):
         self.state = browser.all('[id^=react-select][id*=option]')
         self.adress = browser.element('#currentAddress')
-
-    @allure.step("Открытие браузера")
-    def open(self):
-        browser.open('/automation-practice-form')
 
     @allure.step("Открытие файла")
     def choice_pictures(self, filename):
@@ -27,11 +25,9 @@ class RegistrationPage:
     def fill_first_name(self, value):
         browser.element('#firstName').send_keys(value)
 
-
     @allure.step("Заполнение фамилии")
     def fill_last_name(self, value):
         browser.element('#lastName').send_keys(value)
-
 
     @allure.step("Заполнение email")
     def fill_email(self, value):
@@ -55,15 +51,18 @@ class RegistrationPage:
     @allure.step("Выбор предмета")
     def choice_subject(self, value):
         browser.element('#subjectsInput').send_keys(value).press_enter()
+
     @allure.step("Увлечения")
     def choice_hobbies(self, value):
         browser.all('[for = hobbies-checkbox-1]').element_by(have.exact_text(value)).click()
+
     @allure.step("Увлечения")
     def choice_hobbies_more(self, value):
         browser.all('[for = hobbies-checkbox-2]').element_by(have.exact_text(value)).click()
 
     def choice_hobbies_more_more(self, value):
         browser.all('[for = hobbies-checkbox-3]').element_by(have.exact_text(value)).click()
+
     @allure.step("Проверка формы регистрации")
     def assert_register_user_info(self, full_name,
                                   email, gender,
@@ -82,15 +81,18 @@ class RegistrationPage:
             f'Address {adress}',
             f'State and City {city}',
         ))
+
     @allure.step("Адрес")
     def fill_adress(self, adress):
         self.adress.perform(command.js.scroll_into_view)
         self.adress.send_keys(adress)
         browser.element('#state').click()
+
     @allure.step("Штат")
     def fill_state(self, state):
         self.state.element_by(have.exact_text(state)).click()
         browser.element('#city').click()
+
     @allure.step("Город")
     def fill_city(self, city):
         self.state.element_by(have.exact_text(city)).click()
