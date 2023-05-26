@@ -1,5 +1,6 @@
 from pages.registration_pages import RegistrationPage
 
+
 def test_complete_registration_demoqa():
     # открытие регистрации
     registration_page = RegistrationPage()

@@ -8,6 +8,7 @@ class RegistrationPage:
         browser.driver.execute_script(
             'document.querySelector("#fixedban").remove()'
         )
+
     def __init__(self):
         self.state = browser.all('[id^=react-select][id*=option]')
         self.adress = browser.element('#currentAddress')
@@ -50,7 +51,6 @@ class RegistrationPage:
 
     def choice_hobbies_more_more(self, value):
         browser.all('[for = hobbies-checkbox-3]').element_by(have.exact_text(value)).click()
-
 
     def assert_register_user_info(self, full_name,
                                   email, gender,
