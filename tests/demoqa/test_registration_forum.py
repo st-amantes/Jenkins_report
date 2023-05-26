@@ -1,15 +1,16 @@
 import allure
+
 from pages.registration_pages import RegistrationPage
 
 
 @allure.title("Тест регистрации формы")
 def test_successful(setup_browser):
     browser = setup_browser
-    registration_page = RegistrationPage()
-    browser.open("https://demoqa.com/automation-practice-form")
 
     @allure.step("Fill form")
     def fill_form():
+        registration_page = RegistrationPage()
+        browser.open("https://demoqa.com/automation-practice-form")
         registration_page.fill_first_name("Albert")
         registration_page.fill_last_name("Ivanov")
         registration_page.fill_email("ALLIIVAN@mail.ru")
