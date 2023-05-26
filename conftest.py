@@ -1,16 +1,24 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selene import Browser, Config, browser
+from selene import Browser, Config
 
 from utilits import attach
 
+DEFAULT_BROWSER_VERSION = "100.0"
 
-@pytest.fixture(scope="function", autouse=True)
-def driver_setting():
+def pytest_addoption(parser):
+    parser.addoption(
+        '--browser_version',
+        default='100.0'
+    )
+
+@pytest.fixture(scope="function")
+def driver_setting(request):
+    selenoid_browser =request.config.getoption("--browser")
     options = Options()
     selenoid_capabilities = {
-        "browserName": "chrome",
+        "browserName": selenoid_browser,
         "browserVersion": "100.0",
         "selenoid:options": {
             "enableVNC": True,
@@ -19,11 +27,10 @@ def driver_setting():
     }
     options.capabilities.update(selenoid_capabilities)
     driver = webdriver.Remote(
-
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
-    browser = Browser(Config(driver))
+    browser = Browser(Config(driver=driver))
     yield
 
     attach.add_html(browser)

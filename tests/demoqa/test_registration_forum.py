@@ -3,10 +3,10 @@ from pages.registration_pages import RegistrationPage
 
 
 @allure.title("Тест регистрации формы")
-def test_complete_registration_demoqa():
+def test_complete_registration_demoqa(driver_setting):
     # открытие регистрации
     registration_page = RegistrationPage()
-    registration_page.open()
+    browser = driver_setting
     # заполнение формы
     registration_page.fill_first_name("Albert")
     registration_page.fill_last_name("Ivanov")
