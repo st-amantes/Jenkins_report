@@ -1,41 +1,36 @@
-import allure
-from selene import have, by
+from pages.registration_pages import RegistrationPage
 
+def test_complete_registration_demoqa():
+    # открытие регистрации
+    registration_page = RegistrationPage()
+    registration_page.open()
+    # заполнение формы
+    registration_page.fill_first_name("Albert")
+    registration_page.fill_last_name("Ivanov")
+    registration_page.fill_email("ALLIIVAN@mail.ru")
+    registration_page.fill_number("8954567689")
+    registration_page.choice_gender('Male')
+    registration_page.fill_date_of_birth('1993', 'November', '28')
+    registration_page.choice_subject('Physics')
+    registration_page.choice_hobbies('Sports')
+    registration_page.choice_hobbies_more('Reading')
+    registration_page.choice_hobbies_more_more('Music')
+    registration_page.choice_pictures('pictures.jpg')
+    registration_page.remove_block()
+    registration_page.fill_adress('Pharabi street 18')
+    registration_page.fill_state('Rajasthan')
+    registration_page.fill_city('Jaipur')
 
-# @allure.title("Successful fill form")
-def test_successful(setup_browser):
-    browser = setup_browser
-    first_name = "Vitalii"
-    last_name = "Eremeev"
-
-    with allure.step("Open registrations form"):
-        browser.open("https://demoqa.com/automation-practice-form")
-        browser.element(".practice-form-wrapper").should(have.text("Student Registration Form"))
-        browser.driver.execute_script("$('footer').remove()")
-        browser.driver.execute_script("$('#fixedban').remove()")
-
-    with allure.step("Fill form"):
-        browser.element("#firstName").set_value(first_name)
-        browser.element("#lastName").set_value(last_name)
-        browser.element("#userEmail").set_value("alex@egorov.com")
-        browser.element("#genterWrapper").element(by.text("Other")).click()
-        browser.element("#userNumber").set_value("1231231230")
-        # browser.element("#dateOfBirthInput").click()
-        # browser.element(".react-datepicker__month-select").s("July")
-        # browser.element(".react-datepicker__year-select").selectOption("2008")
-        # browser.element(".react-datepicker__day--030:not(.react-datepicker__day--outside-month)").click()
-        browser.element("#subjectsInput").send_keys("Maths")
-        browser.element("#subjectsInput").press_enter()
-        browser.element("#hobbiesWrapper").element(by.text("Sports")).click()
-        # browser.element("#uploadPicture").uploadFromClasspath("img/1.png")
-        browser.element("#currentAddress").set_value("Some street 1")
-        browser.element("#state").click()
-        browser.element("#stateCity-wrapper").element(by.text("NCR")).click()
-        browser.element("#city").click()
-        browser.element("#stateCity-wrapper").element(by.text("Delhi")).click()
-        browser.element("#submit").click()
-
-    with allure.step("Check form results"):
-        browser.element("#example-modal-sizes-title-lg").should(have.text("Thanks for submitting the form"))
-        # browser.element(".table-responsive").should(
-        #     have.texts(first_name, last_name, "alex@egorov.com", "Some street 1"))
+    # THEN
+    # проверка формы
+    registration_page.assert_register_user_info(
+        'Albert Ivanov',
+        'ALLIIVAN@mail.ru',
+        'Male',
+        '8954567689',
+        '28 November,1993',
+        'Physics',
+        'Sports, Reading, Music',
+        'picture',
+        'Pharabi street 18',
+        'Rajasthan Jaipur')
