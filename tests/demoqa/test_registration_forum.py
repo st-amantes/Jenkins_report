@@ -5,8 +5,8 @@ from pages.registration_pages import RegistrationPage
 
 @allure.title("Тест регистрации формы")
 def test_successful(setup_browser):
-    registration_page = RegistrationPage()
     browser = setup_browser
+    registration_page = RegistrationPage(browser)
 
     with allure.step("Открытие браузера"):
         browser.open("https://demoqa.com/automation-practice-form")
