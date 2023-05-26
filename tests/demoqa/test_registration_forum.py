@@ -1,7 +1,5 @@
 import allure
-from selene import browser
 from pages.registration_pages import RegistrationPage
-from utilits import attach
 
 
 @allure.title("Тест регистрации формы")
@@ -40,8 +38,5 @@ def test_complete_registration_demoqa():
         'Pharabi street 18',
         'Rajasthan Jaipur')
 
-    attach.add_html(browser)
-    attach.add_html(browser)
-    attach.add_screenshot(browser)
 
 

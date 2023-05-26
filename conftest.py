@@ -1,6 +1,9 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selene import Browser, Config, browser
+
+from utilits import attach
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -20,9 +23,9 @@ def driver_setting():
         command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
         options=options)
 
-    # browser.config.driver = driver
-    # browser.config.base_url = "https://demoqa.com"
-    # browser.driver.set_window_size(1980, 1080)
-    # yield
-    #
-    # browser.quit()
+    browser = Browser(Config(driver))
+    yield
+
+    attach.add_html(browser)
+    attach.add_html(browser)
+    attach.add_screenshot(browser)
